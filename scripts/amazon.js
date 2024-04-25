@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import { cart, addTOCart} from "../data/cart.js";
 import { products } from "../data/products.js";
 
 let productsHtml = "";
@@ -55,6 +55,7 @@ products.forEach((product) => {
     </button>
   </div>`;
 });
+
 function incrementCart(value) {
   // function to increment the number of items added to the chart
   document.querySelector(".cart-quantity").innerHTML = value; // adds the number of item in the selected div section
@@ -65,25 +66,10 @@ document.querySelector(".js-products-grid").innerHTML = productsHtml;
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
     const productId = button.dataset.productId;// produce all data in the button element speciffically the product ID
-       let matchingItem;
-      cart.forEach((item) =>{
-       if (productId === item.productId){
-         matchingItem = item;
-       }
-      });
-      if (matchingItem){
-        matchingItem.quantity += 1;
-        return
-      }
-       else {
-         cart.push({ //stores the prodect ID and quantity as object properties to the cart array
-           productId: productId,
-           quantity:1
-         });
-         incrementCart(cart.length)//increments the cart according to the array(that is cart) lenght
-      }
-      console.log(cart);
+    addTOCart(productId)//calls the functions which is found in the cart.js file
+    incrementCart(cart.length)//increments the number of cartitems according to the array(that is cart) lenght
 
+    //this comments below is a different way of adding an item to a chart
     // cart.map(item=>{
     //   if(item.productName ===productName )
     //   {
